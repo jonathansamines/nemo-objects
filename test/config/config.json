@@ -1,0 +1,18 @@
+{
+  "data": {
+    "url": "http://localhost:3000"
+  },
+  "driver": {
+    "browser": "phantomjs"
+  },
+  "plugins": {
+    "page-objects": {
+      "module": "path:./..",
+      "arguments": [
+        {
+          "pageLocation": "path:./../test/pages"
+        }
+      ]
+    }
+  }
+}

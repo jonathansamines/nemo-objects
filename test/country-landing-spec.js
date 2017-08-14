@@ -34,6 +34,8 @@ describe('At the landing page', () => {
       scopedAttribute: countryLanding.scopedMessageAttribute(),
       resetMessageAttribute: countryLanding.resetMessageAttribute(),
       atPositionAttribute: countryLanding.messageAtPositionAttribute(),
+
+      countries: countryLanding.countries(),
     })
     .then((options) => {
       console.log(options);
@@ -48,7 +50,11 @@ describe('At the landing page', () => {
         multipleAttribute: [ 'hello attribute 1', 'hello attribute 2' ],
         scopedAttribute: 'hello scoped attribute',
         resetMessageAttribute: 'reset-scoped attribute',
-        atPositionAttribute: 'hello attribute 2'
+        atPositionAttribute: 'hello attribute 2',
+        countries: [ { countryName: 'Guatemala', countryCode: 'GT' },
+          { countryName: 'Guatemala', countryCode: 'GT' },
+          { countryName: 'Guatemala', countryCode: 'GT' },
+          { countryName: 'Guatemala', countryCode: 'GT' } ]
       });
     });
   });

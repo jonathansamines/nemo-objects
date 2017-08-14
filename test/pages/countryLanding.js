@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = function countryLanding(pageObject, nemo) {
-  const { visitable, text, attribute } = pageObject;
+  const { visitable, text, attribute, collection } = pageObject;
 
   return {
     scope: '.wrapper',
@@ -21,13 +21,13 @@ module.exports = function countryLanding(pageObject, nemo) {
     resetMessageAttribute: attribute('data-attribute', '.hello', { scope: '.reset-scope', resetScope: true }),
     messageAtPositionAttribute: attribute('data-attribute', '.multiple', { multiple: true, at: 1 }),
 
-    // countries: collection({
-    //   scope: '.country-list',
-    //   itemScope: 'ul li',
-    //   item: {
-    //     countryName: text('span'),
-    //     countryCode: text('i'),
-    //   },
-    // })
+    countries: collection({
+      scope: '.country-list',
+      itemScope: 'ul li',
+      item: {
+        countryName: text('span'),
+        countryCode: text('i'),
+      },
+    })
   };
 };

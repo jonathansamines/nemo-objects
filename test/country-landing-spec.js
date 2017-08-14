@@ -28,6 +28,12 @@ describe('At the landing page', () => {
       scoped: countryLanding.scopedMessage(),
       resetMessage: countryLanding.resetMessage(),
       atPosition: countryLanding.messageAtPosition(),
+
+      singleMessageAttribute: countryLanding.messageAttribute(),
+      multipleAttribute: countryLanding.messagesAttribute(),
+      scopedAttribute: countryLanding.scopedMessageAttribute(),
+      resetMessageAttribute: countryLanding.resetMessageAttribute(),
+      atPositionAttribute: countryLanding.messageAtPositionAttribute(),
     })
     .then((options) => {
       console.log(options);
@@ -38,6 +44,11 @@ describe('At the landing page', () => {
         scoped: 'Hello to the scoped world',
         resetMessage: 'Hello to the reset-scoped world',
         atPosition: 'Hello to the world 2',
+        singleMessageAttribute: 'hello single attribute 1',
+        multipleAttribute: [ 'hello attribute 1', 'hello attribute 2' ],
+        scopedAttribute: 'hello scoped attribute',
+        resetMessageAttribute: 'reset-scoped attribute',
+        atPositionAttribute: 'hello attribute 2'
       });
     });
   });

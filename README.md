@@ -1,4 +1,4 @@
-# Nemo Page Object
+# Nemo Page Object (WIP)
 Easily create and use the Page Object pattern in your nemo based tests, by using a simple api, mostly inspired by the ember-cli-page-object addon used in the ember ecosystem.
 
 ## Installation

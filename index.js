@@ -30,11 +30,12 @@ function createPageObject(opts, nemo, callback) {
     opts = {};
   }
 
-  nemo._page = pageObject(nemo);
+  const pageModel = require('./test/pages/countryLanding');
+  const instance = pageObject(nemo, pageModel);
 
   // TODO: Load page objects based on the provided path
   nemo.page = {
-    countryLanding: require('./test/pages/countryLanding')(nemo),
+    countryLanding: instance,
   };
 
   callback();

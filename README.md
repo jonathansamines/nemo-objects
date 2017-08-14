@@ -34,8 +34,8 @@ At the `countryLanding.js` file, a page-object can be declared as follows:
 ```js
   'use strict';
 
-  module.exports = function countryLanding(nemo) {
-    const { visitable, collection, text } = nemo._page;
+  module.exports = function countryLanding(pageObject, nemo) {
+    const { visitable, collection, text } = pageObject;
 
     return {
       visit: visitable(`${nemo.data.url}/country-landing`),

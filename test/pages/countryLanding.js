@@ -1,7 +1,14 @@
 'use strict';
 
 module.exports = function countryLanding(pageObject, nemo) {
-  const { visitable, text, attribute, collection } = pageObject;
+  const {
+    visitable,
+    text,
+    attribute,
+    collection,
+    count,
+    hasClass,
+  } = pageObject;
 
   return {
     scope: '.wrapper',
@@ -13,6 +20,18 @@ module.exports = function countryLanding(pageObject, nemo) {
     scopedMessage: text('.hello', { scope: '.scoped' }),
     resetMessage: text('.hello', { scope: '.reset-scope', resetScope: true }),
     messageAtPosition: text('.multiple', { multiple: true, at: 1 }),
+
+    // count
+    messagesCount: count('.multiple'),
+    scopedMessagesCount: count('.hello', { scope: '.scoped' }),
+    resetScopeMessagesCount: count('.hello', { scope: '.reset-scope', resetScope: true }),
+
+    // hasClass
+    firstMessageIsSingle: hasClass('single', 'p'),
+    allMessagesAreSingle: hasClass('single', 'p', { multiple: true }),
+    scopedMessageIsHello: hasClass('hello', 'p', { scope: '.scoped' }),
+    scopedResetMessageIsHello: hasClass('hello', 'p', { scope: '.reset-scope', resetScope: true }),
+    thirdElementIsMultiple: hasClass('multiple', 'p', { multiple: true, at: 2 }),
 
     // attribute
     messageAttribute: attribute('data-attribute', '.single'),

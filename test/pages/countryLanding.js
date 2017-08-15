@@ -9,6 +9,7 @@ module.exports = function countryLanding(pageObject, nemo) {
     count,
     hasClass,
     isVisible,
+    value,
   } = pageObject;
 
   return {
@@ -47,6 +48,13 @@ module.exports = function countryLanding(pageObject, nemo) {
     isScopedMessageVisible: isVisible('.hidden', { scope: '.scoped' }),
     isResetScopedMessageVisible: isVisible('.hidden', { scope: '.reset-scope', resetScope: true }),
     isMessateAtPositionVisible: isVisible('.multiple', { multiple: true, at: 1 }),
+
+    // value
+    singleValue: value('.input-single'),
+    multipleValues: value('.input-multiple', { multiple: true }),
+    scopedValue: value('input', { scope: '.scoped' }),
+    resetScopedValue: value('input', { scope: '.reset-scope', resetScope: true }),
+    valueAtPosition: value('.input-multiple', { multiple: true, at: 1 }),
 
     countries: collection({
       scope: '.country-list',

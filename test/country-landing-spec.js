@@ -49,6 +49,12 @@ describe('At the landing page', () => {
       isResetScopedMessageVisible: countryLanding.isResetScopedMessageVisible(),
       isMessateAtPositionVisible: countryLanding.isMessateAtPositionVisible(),
 
+      singleValue: countryLanding.singleValue(),
+      multipleValues: countryLanding.multipleValues(),
+      scopedValue: countryLanding.scopedValue(),
+      resetScopedValue: countryLanding.resetScopedValue(),
+      valueAtPosition: countryLanding.valueAtPosition(),
+
       // hasClass
       firstMessageIsSingle: countryLanding.firstMessageIsSingle(),
       allMessagesAreSingle: countryLanding.allMessagesAreSingle(),
@@ -87,7 +93,13 @@ describe('At the landing page', () => {
         isScopedMessageVisible: false,
         isResetScopedMessageVisible: false,
         isMessateAtPositionVisible: true,
-        
+
+        // value
+        singleValue: 'Hello single value 1',
+        multipleValues: [ 'Hello multiple value 1', 'Hello multiple value 2' ],
+        scopedValue: 'Hello scoped value',
+        resetScopedValue: 'Hello reset scoped value',
+        valueAtPosition: 'Hello multiple value 2',
 
         // attribute
         singleMessageAttribute: 'hello single attribute 1',

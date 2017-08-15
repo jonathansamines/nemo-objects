@@ -1,6 +1,7 @@
 'use strict';
 
 const pageObject = require('./lib/page-object');
+const isFunction = require('lodash/isFunction');
 
 /**
  * Creates the nemo plugin. It sets the page object utilities inside the nemo instance as:
@@ -31,11 +32,20 @@ function createPageObject(opts, nemo, callback) {
   }
 
   const pageModel = require('./test/pages/countryLanding');
-  const instance = pageObject(nemo, pageModel);
+  const page = pageObject(nemo);
+  const model = pageModel(page, nemo);
+  
+  Object.keys(model).forEach((key) => {
+    const method = model[key];
+
+    if (isFunction(method)) {
+      model[key] = method.bind(model, model);
+    }
+  });
 
   // TODO: Load page objects based on the provided path
   nemo.page = {
-    countryLanding: instance,
+    countryLanding: model,
   };
 
   callback();

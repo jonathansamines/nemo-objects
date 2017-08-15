@@ -8,6 +8,7 @@ module.exports = function countryLanding(pageObject, nemo) {
     collection,
     count,
     hasClass,
+    isVisible,
   } = pageObject;
 
   return {
@@ -39,6 +40,13 @@ module.exports = function countryLanding(pageObject, nemo) {
     scopedMessageAttribute: attribute('data-attribute', '.hello', { scope: '.scoped' }),
     resetMessageAttribute: attribute('data-attribute', '.hello', { scope: '.reset-scope', resetScope: true }),
     messageAtPositionAttribute: attribute('data-attribute', '.multiple', { multiple: true, at: 1 }),
+
+    // visibility
+    isSingleMessageVisible: isVisible('.single'),
+    areSingleMessagesVisible: isVisible('.single', { multiple: true }),
+    isScopedMessageVisible: isVisible('.hidden', { scope: '.scoped' }),
+    isResetScopedMessageVisible: isVisible('.hidden', { scope: '.reset-scope', resetScope: true }),
+    isMessateAtPositionVisible: isVisible('.multiple', { multiple: true, at: 1 }),
 
     countries: collection({
       scope: '.country-list',

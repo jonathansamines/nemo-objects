@@ -31,22 +31,27 @@ function createPageObject(opts, nemo, callback) {
     opts = {};
   }
 
-  const pageModel = require('./test/pages/countryLanding');
-  const page = pageObject(nemo);
-  const model = pageModel(page, nemo);
+  const names = ['countryLanding'];
+  const modules = ['./test/pages/countryLanding'];
+
+  modules.forEach((modulePath, index) => {
+    const pageModel = require(modulePath);
+    const page = pageObject(nemo);
+    const model = pageModel(page, nemo);
+    
+    Object.keys(model).forEach((key) => {
+      const method = model[key];
   
-  Object.keys(model).forEach((key) => {
-    const method = model[key];
-
-    if (isFunction(method)) {
-      model[key] = method.bind(model, model);
-    }
+      if (isFunction(method)) {
+        model[key] = method.bind(model, model);
+      }
+    });
+  
+    // TODO: Load page objects based on the provided path
+    nemo.page = {
+      [names[index]]: model,
+    };
   });
-
-  // TODO: Load page objects based on the provided path
-  nemo.page = {
-    countryLanding: model,
-  };
 
   callback();
 };

@@ -9,8 +9,8 @@ const isFunction = require('lodash/isFunction');
  * @example
  * {
  *  "plugins": {
- *    "page-object": {
- *      "module": "nemo-page-object",
+ *    "nemo-objects": {
+ *      "module": "nemo-objects",
  *      "arguments": [
  *        {
  *           "pagesLocation": "/path/to/pages"
@@ -48,7 +48,7 @@ function createPageObject(opts, nemo, callback) {
     });
   
     // TODO: Load page objects based on the provided path
-    nemo.page = {
+    nemo.objects = {
       [names[index]]: model,
     };
   });

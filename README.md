@@ -1,10 +1,11 @@
-# Nemo Page Object (WIP)
-Easily create and use the Page Object pattern in your nemo based tests, by using a simple api, mostly inspired by the ember-cli-page-object addon used in the ember ecosystem.
+# Nemo Objects
+
+Easily create and use the Page Object pattern in your nemo based tests, by using a simple api, mostly inspired by the [ember-cli-page-object](https://github.com/san650/ember-cli-page-object) ember addon, widely used in the ember ecosystem for functional and integration testing.
 
 ## Installation
 
 ```bash
-  npm install --save nemo-page-object
+  npm install --save nemo-objects
 ```
 
 ## Usage
@@ -14,8 +15,8 @@ In your nemo configuration
 ```json
   {
     "plugins": {
-      "page-object": {
-        "module": "nemo-page-object",
+      "nemo-objects": {
+        "module": "nemo-objects",
         "arguments": [
           {
             "pagesLocation": "/path/to/page-objects"

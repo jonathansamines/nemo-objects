@@ -1,5 +1,7 @@
 'use strict';
 
+const Promise = require('bluebird');
+
 module.exports = function countryLanding(pageObject, nemo) {
   const {
     visitable,
@@ -15,6 +17,16 @@ module.exports = function countryLanding(pageObject, nemo) {
   return {
     scope: '.wrapper',
     visit: visitable(nemo.data.url),
+
+    getText() {
+      return Promise.props({
+        singleMessage: this.message(),
+        multiple: this.messages(),
+        scoped: this.scopedMessage(),
+        resetMessage: this.resetMessage(),
+        atPosition: this.messageAtPosition(),
+      });
+    },
 
     // text
     message: text('.single'),

@@ -18,11 +18,13 @@ describe('At the landing page', () => {
   });
 
   it('returns the list of available countries', () => {
-    const { countryLanding } = nemo.page;
+    const { countryLanding } = nemo.objects;
 
     countryLanding.visit();
 
     return Promise.props({
+      textContent: countryLanding.getText(),
+
       // text
       singleMessage: countryLanding.message(),
       multiple: countryLanding.messages(),

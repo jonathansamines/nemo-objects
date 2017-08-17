@@ -1,6 +1,6 @@
 # Nemo Objects
 
-Easily create and use the Page Object pattern in your nemo based tests, by using a simple api, mostly inspired by the [ember-cli-page-object](https://github.com/san650/ember-cli-page-object) ember addon, widely used in the ember ecosystem for functional and integration testing.
+Easily implement and use the Page Object pattern in your nemo based tests, by using a simple api, mostly inspired by the [ember-cli-page-object](https://github.com/san650/ember-cli-page-object) ember addon, widely used in the ember ecosystem for functional and integration testing.
 
 ## Installation
 
@@ -64,7 +64,7 @@ Which later can be used at your functional tests as:
       await countryLanding.visit();
       const countries = await countryLanding.countries();
       
-      expect(countries.count).to.be.equal(4, 'the number of countries matches the user settings');
+      expect(countries.length).to.be.equal(4, 'the number of countries matches the user settings');
     });
   });
 ```

@@ -1,13 +1,13 @@
 {
-  "name": "nemo-page-object",
+  "name": "nemo-objects",
   "version": "1.0.0",
-  "description": "",
+  "description": "Easily implement and use the Page Object pattern in your nemo based tests",
   "main": "index.js",
   "scripts": {
     "test": "mocha test"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": ["nemo", "page-object", "objects", "selenium", "functional", "test", "nemo-plugin"],
+  "author": "Jonathan Samines <jn.samines@gmail.com>",
   "license": "ISC",
   "devDependencies": {
     "chai": "^4.1.0",

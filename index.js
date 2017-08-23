@@ -1,11 +1,12 @@
 'use strict';
 
-const pageObject = require('./lib/page-object');
 const isFunction = require('lodash/isFunction');
+const pageObject = require('./lib/page-object');
 
 /**
  * Creates the nemo plugin. It sets the page object utilities inside the nemo instance as:
- * nemo.page
+ * nemo.objects
+ *
  * @example
  * {
  *  "plugins": {
@@ -20,8 +21,9 @@ const isFunction = require('lodash/isFunction');
  *  }
  * }
  * 
- * @param {Object} opts 
- * @param {Object} nemo 
+ * @param {Object} opts
+ * @param {String} opts.pagesLocation Absolute path pointing to a valid directory
+ * @param {Object} nemo
  * @param {Function} callback 
  */
 function createPageObject(opts, nemo, callback) {

@@ -10,7 +10,7 @@ Easily implement and use the Page Object pattern in your nemo based tests, by us
 
 ## Usage
 ### Configuring the nemo plugin
-In your nemo configuration
+In your nemo configuration, with an absolute path specify where your page objects are.
 
 ```json
   {
@@ -28,18 +28,18 @@ In your nemo configuration
 ```
 
 ### Creating a page object
-At the specified location, for any given file found a page object will be created at the `nemo.page` namespace. For example, if a file named `countryLanding.js` is found, then a page object is created as `nemo.page.countryLanding`.
+At the specified location, for any given file found a page object will be created at the `nemo.objects` namespace. For example, if a file named `countryCenter.js` is found, then a page object is created as `nemo.object.countryCenter`.
 
-At the `countryLanding.js` file, a page-object can be declared as follows:
+At the `countryCenter.js` file, a page-object can be declared as follows:
 
 ```js
   'use strict';
 
-  module.exports = function countryLanding(pageObject, nemo) {
+  module.exports = function countryCenterPage(pageObject, nemo) {
     const { visitable, collection, text } = pageObject;
 
     return {
-      visit: visitable(`${nemo.data.url}/country-landing`),
+      visit: visitable(`${nemo.data.url}/country-center`),
       countries: collection({
         scope: '.country-list',
         itemScope: 'ul li',
@@ -57,12 +57,12 @@ Which later can be used at your functional tests as:
   // all the setup code for your nemo environment
   // The `nemo` variable is made available here
 
-  describe('At the country landing page', () => {
+  describe('At the country center page', () => {
     it('All user countries are shown', async () => {
-      const { countryLanding } = nemo.page;
+      const { countryCenter } = nemo.objects;
 
-      await countryLanding.visit();
-      const countries = await countryLanding.countries();
+      await countryCenter.visit();
+      const countries = await countryCenter.countries();
       
       expect(countries.length).to.be.equal(4, 'the number of countries matches the user settings');
     });
@@ -71,4 +71,14 @@ Which later can be used at your functional tests as:
 
 
 ## API
-A detailed documentation can be found here.
+### Plugin configuration
+  + `options`
+    - `pagesLocation` - An absolute path indicating where you page objects are
+
+### Page objects
+Each module located at the specified location should export a function, which receives the following arguments:
+
+  + `pageObject` - Holds the pageObject helper functions to be used along with your page objects
+  + `nemo` - The nemo instance
+
+Each module is expected to return an object describing the page object.

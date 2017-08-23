@@ -4,7 +4,7 @@
   "description": "Easily implement and use the Page Object pattern in your nemo based tests",
   "main": "index.js",
   "scripts": {
-    "start": "documentation serve",
+    "start": "documentation serve --watch index.js",
     "test": "mocha test"
   },
   "keywords": [

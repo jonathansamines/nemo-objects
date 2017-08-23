@@ -11,9 +11,11 @@ const globAsync = Promise.promisify(glob, { multiArgs: true });
 const PAGE_OBJECT_MODULES_GLOB = '**/*.js';
 
 /**
- * Creates the nemo plugin. It sets the page object utilities inside the nemo instance as:
- * nemo.objects
- *
+ * 
+ * Easily implement and use the Page Object pattern in your nemo based tests, by using a simple api,
+ * mostly inspired by the [ember-cli-page-object](https://github.com/san650/ember-cli-page-object) ember addon, widely used in the ember ecosystem for functional and integration testing.
+ * 
+ * In your nemo configuration, with an absolute path specify where your page objects are.
  * @example
  * {
  *  "plugins": {
@@ -27,7 +29,7 @@ const PAGE_OBJECT_MODULES_GLOB = '**/*.js';
  *    }
  *  }
  * }
- * 
+ * @name nemoObjects
  * @param {Object} opts
  * @param {String} opts.pagesLocation Absolute path pointing to a valid directory
  * @param {Object} nemo

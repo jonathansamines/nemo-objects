@@ -18,16 +18,6 @@ module.exports = function countryLanding(pageObject, nemo) {
     scope: '.wrapper',
     visit: visitable(nemo.data.url),
 
-    getText() {
-      return Promise.props({
-        singleMessage: this.message(),
-        multiple: this.messages(),
-        scoped: this.scopedMessage(),
-        resetMessage: this.resetMessage(),
-        atPosition: this.messageAtPosition(),
-      });
-    },
-
     // text
     message: text('.single'),
     messages: text('.multiple', { multiple: true }),

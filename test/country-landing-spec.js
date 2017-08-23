@@ -23,8 +23,6 @@ describe('At the landing page', () => {
     countryLanding.visit();
 
     return Promise.props({
-      textContent: countryLanding.getText(),
-
       // text
       singleMessage: countryLanding.message(),
       multiple: countryLanding.messages(),

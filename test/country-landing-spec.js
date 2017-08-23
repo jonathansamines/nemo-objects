@@ -20,6 +20,8 @@ describe('At the landing page', () => {
   it('returns the list of available countries', () => {
     const { countryLanding } = nemo.objects;
 
+    console.log(nemo.objects);
+
     countryLanding.visit();
 
     return Promise.props({

@@ -21,6 +21,7 @@
     "chai": "^4.1.0",
     "documentation": "^5.2.2",
     "express": "^4.15.3",
+    "glob": "^7.1.2",
     "mocha": "^3.4.2",
     "nemo": "^2.4.1",
     "serve-static": "^1.12.3"

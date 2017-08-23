@@ -1,7 +1,14 @@
 'use strict';
 
+const path = require('path');
+const glob = require('glob');
+const assert = require('assert');
+const Promise = require('bluebird');
 const isFunction = require('lodash/isFunction');
 const pageObject = require('./lib/page-object');
+
+const globAsync = Promise.promisify(glob, { multiArgs: true });
+const PAGE_OBJECT_MODULES_GLOB = '**/*.js';
 
 /**
  * Creates the nemo plugin. It sets the page object utilities inside the nemo instance as:
@@ -33,29 +40,36 @@ function createPageObject(opts, nemo, callback) {
     opts = {};
   }
 
-  const names = ['countryLanding'];
-  const modules = ['./test/pages/countryLanding'];
+  return Promise.try(() => {
+    assert(typeof opts.pagesLocation === 'string', 'A pages absolute path is required');
 
-  modules.forEach((modulePath, index) => {
-    const pageModel = require(modulePath);
+    return globAsync(PAGE_OBJECT_MODULES_GLOB, { cwd: opts.pagesLocation });
+  })
+  .then((moduleNames) => {
     const page = pageObject(nemo);
-    const model = pageModel(page, nemo);
-    
-    Object.keys(model).forEach((key) => {
-      const method = model[key];
-  
-      if (isFunction(method)) {
-        model[key] = method.bind(model, model);
-      }
-    });
-  
-    // TODO: Load page objects based on the provided path
-    nemo.objects = {
-      [names[index]]: model,
-    };
-  });
 
-  callback();
+    nemo.objects = {};
+
+    return moduleNames.forEach((moduleName) => {
+      const modulePath = path.resolve(opts.pagesLocation, moduleName[0]);
+      const moduleNameWithoutExt = path.basename(modulePath, path.extname(modulePath));
+      const pageModule = require(modulePath);
+      const model = pageModule(page, nemo);
+      
+      Object.keys(model).forEach((key) => {
+        const method = model[key];
+    
+        if (isFunction(method)) {
+          model[key] = method.bind(model, model);
+        }
+      });
+
+      Object.assign(nemo.objects, {
+        [moduleNameWithoutExt]: model,
+      });
+    });
+  })
+  .asCallback(callback);
 };
 
 module.exports = {

@@ -10,7 +10,7 @@
       "module": "path:./..",
       "arguments": [
         {
-          "pageLocation": "path:./../test/pages"
+          "pagesLocation": "path:./../test/pages"
         }
       ]
     }

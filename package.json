@@ -6,11 +6,20 @@
   "scripts": {
     "test": "mocha test"
   },
-  "keywords": ["nemo", "page-object", "objects", "selenium", "functional", "test", "nemo-plugin"],
+  "keywords": [
+    "nemo",
+    "page-object",
+    "objects",
+    "selenium",
+    "functional",
+    "test",
+    "nemo-plugin"
+  ],
   "author": "Jonathan Samines <jn.samines@gmail.com>",
   "license": "ISC",
   "devDependencies": {
     "chai": "^4.1.0",
+    "documentation": "^5.2.2",
     "express": "^4.15.3",
     "mocha": "^3.4.2",
     "nemo": "^2.4.1",

@@ -45,7 +45,9 @@ function createPageObject(opts, nemo, callback) {
   return Promise.try(() => {
     assert(typeof opts.pagesLocation === 'string', 'A pages absolute path is required');
 
-    return globAsync(PAGE_OBJECT_MODULES_GLOB, { cwd: opts.pagesLocation });
+    return globAsync(PAGE_OBJECT_MODULES_GLOB, {
+      cwd: opts.pagesLocation
+    });
   })
   .then((moduleNames) => {
     const page = pageObject(nemo);

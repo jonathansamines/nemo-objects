@@ -3,7 +3,7 @@
     "url": "http://localhost:3000"
   },
   "driver": {
-    "browser": "phantomjs"
+    "browser": "chrome"
   },
   "plugins": {
     "page-objects": {

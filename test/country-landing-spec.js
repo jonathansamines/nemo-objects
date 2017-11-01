@@ -7,13 +7,19 @@ const server = require('./fixtures/server');
 
 describe('At the landing page', () => {
   let nemo;
+  let app;
   let countryLanding;
 
   before(async () => {
     nemo = await nemoBuilder(__dirname);
-    await server();
+    app = await server();
 
     countryLanding = nemo.objects.countryLanding;
+  });
+
+  after(async () => {
+    await nemo.driver.quit();
+    await app.close();
   });
 
   it('returns the list of available countries', async () => {

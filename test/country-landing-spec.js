@@ -7,24 +7,19 @@ const server = require('./fixtures/server');
 
 describe('At the landing page', () => {
   let nemo;
+  let countryLanding;
 
-  before((done) => {
-    nemoBuilder(__dirname).then((instance) => {
-      nemo = instance;
+  before(async () => {
+    nemo = await nemoBuilder(__dirname);
+    await server();
 
-      server(done);
-    })
-    .catch(done);
+    countryLanding = nemo.objects.countryLanding;
   });
 
-  it('returns the list of available countries', () => {
-    const { countryLanding } = nemo.objects;
+  it('returns the list of available countries', async () => {
+    await countryLanding.visit();
 
-    console.log(nemo.objects);
-
-    countryLanding.visit();
-
-    return Promise.props({
+    const model = await Promise.props({
       // text
       singleMessage: countryLanding.message(),
       multiple: countryLanding.messages(),
@@ -65,55 +60,52 @@ describe('At the landing page', () => {
       thirdElementIsMultiple: countryLanding.thirdElementIsMultiple(),
 
       countries: countryLanding.countries(),
-    })
-    .then((options) => {
-      console.log(options);
+    });
 
-      expect(options).to.be.deep.equal({
-        // text
-        singleMessage: 'Hello to the single world 1',
-        multiple: [ 'Hello to the world 1', 'Hello to the world 2' ],
-        scoped: 'Hello to the scoped world',
-        resetMessage: 'Hello to the reset-scoped world',
-        atPosition: 'Hello to the world 2',
+    expect(model).to.be.deep.equal({
+      // text
+      singleMessage: 'Hello to the single world 1',
+      multiple: [ 'Hello to the world 1', 'Hello to the world 2' ],
+      scoped: 'Hello to the scoped world',
+      resetMessage: 'Hello to the reset-scoped world',
+      atPosition: 'Hello to the world 2',
 
-        // count
-        messagesCount: 2,
-        scopedMessagesCount: 1,
-        resetScopeMessagesCount: 1,
+      // count
+      messagesCount: 2,
+      scopedMessagesCount: 1,
+      resetScopeMessagesCount: 1,
 
-        // hasClass
-        firstMessageIsSingle: true,
-        allMessagesAreSingle: false,
-        scopedMessageIsHello: true,
-        scopedResetMessageIsHello: true,
-        thirdElementIsMultiple: true,
+      // hasClass
+      firstMessageIsSingle: true,
+      allMessagesAreSingle: false,
+      scopedMessageIsHello: true,
+      scopedResetMessageIsHello: true,
+      thirdElementIsMultiple: true,
 
-        // visible
-        isSingleMessageVisible: true,
-        areSingleMessagesVisible: true,
-        isScopedMessageVisible: false,
-        isResetScopedMessageVisible: false,
-        isMessateAtPositionVisible: true,
+      // visible
+      isSingleMessageVisible: true,
+      areSingleMessagesVisible: true,
+      isScopedMessageVisible: false,
+      isResetScopedMessageVisible: false,
+      isMessateAtPositionVisible: true,
 
-        // value
-        singleValue: 'Hello single value 1',
-        multipleValues: [ 'Hello multiple value 1', 'Hello multiple value 2' ],
-        scopedValue: 'Hello scoped value',
-        resetScopedValue: 'Hello reset scoped value',
-        valueAtPosition: 'Hello multiple value 2',
+      // value
+      singleValue: 'Hello single value 1',
+      multipleValues: [ 'Hello multiple value 1', 'Hello multiple value 2' ],
+      scopedValue: 'Hello scoped value',
+      resetScopedValue: 'Hello reset scoped value',
+      valueAtPosition: 'Hello multiple value 2',
 
-        // attribute
-        singleMessageAttribute: 'hello single attribute 1',
-        multipleAttribute: [ 'hello attribute 1', 'hello attribute 2' ],
-        scopedAttribute: 'hello scoped attribute',
-        resetMessageAttribute: 'reset-scoped attribute',
-        atPositionAttribute: 'hello attribute 2',
-        countries: [ { countryName: 'Guatemala', countryCode: 'GT' },
-          { countryName: 'Guatemala', countryCode: 'GT' },
-          { countryName: 'Guatemala', countryCode: 'GT' },
-          { countryName: 'Guatemala', countryCode: 'GT' } ]
-      });
+      // attribute
+      singleMessageAttribute: 'hello single attribute 1',
+      multipleAttribute: [ 'hello attribute 1', 'hello attribute 2' ],
+      scopedAttribute: 'hello scoped attribute',
+      resetMessageAttribute: 'reset-scoped attribute',
+      atPositionAttribute: 'hello attribute 2',
+      countries: [ { countryName: 'Guatemala', countryCode: 'GT' },
+        { countryName: 'Guatemala', countryCode: 'GT' },
+        { countryName: 'Guatemala', countryCode: 'GT' },
+        { countryName: 'Guatemala', countryCode: 'GT' } ]
     });
   });
 });

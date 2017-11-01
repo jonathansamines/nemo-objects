@@ -3,7 +3,14 @@
     "url": "http://localhost:3000"
   },
   "driver": {
-    "browser": "chrome"
+    "builders": {
+      "withCapabilities": [{
+        "browserName": "chrome",
+        "chromeOptions": {
+          "args": ["headless", "disable-gpu"]
+        }
+      }]
+    }
   },
   "plugins": {
     "page-objects": {

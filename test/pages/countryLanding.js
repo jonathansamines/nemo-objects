@@ -17,7 +17,7 @@ module.exports = function countryLanding(pageObject, nemo) {
   return {
     scope: '.wrapper',
     visit: visitable(nemo.data.url),
-
+    
     // text
     message: text('.single'),
     messages: text('.multiple', { multiple: true }),

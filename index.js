@@ -56,8 +56,13 @@ function createPageObject(opts, nemo, callback) {
 
     return moduleNames.forEach((moduleName) => {
       const modulePath = path.resolve(opts.pagesLocation, moduleName[0]);
-      const moduleNameWithoutExt = path.basename(modulePath, path.extname(modulePath));
+      const pageObjectName = path.basename(modulePath, path.extname(modulePath));
       const pageModule = require(modulePath);
+
+      if (!isFunction(pageModule)) {
+        throw new Error('The page object module was expected to be a function');
+      }
+
       const model = pageModule(page, nemo);
       
       Object.keys(model).forEach((key) => {
@@ -69,7 +74,7 @@ function createPageObject(opts, nemo, callback) {
       });
 
       Object.assign(nemo.objects, {
-        [moduleNameWithoutExt]: model,
+        [pageObjectName]: model,
       });
     });
   })

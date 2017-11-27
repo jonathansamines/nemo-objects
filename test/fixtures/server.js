@@ -1,10 +1,13 @@
 'use strict';
 
+const path = require('path');
 const express = require('express');
 const serveStatic = require('serve-static');
 const app = express();
 
-app.use(serveStatic(__dirname));
+const publicDir = path.join(__dirname, './html');
+
+app.use(serveStatic(publicDir));
 
 module.exports = () => {
   return new Promise((resolve, reject) => {

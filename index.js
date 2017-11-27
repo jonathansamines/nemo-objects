@@ -9,9 +9,7 @@ const pageObject = require('./lib/page-object');
 
 const globAsync = util.promisify(glob);
 
-const getPageModuleNames = async (cwd) => {
-  return await globAsync('**/*.js', { cwd });
-};
+const getPageModuleNames = cwd => globAsync('**/*.js', { cwd });
 
 const getPageModule = (pagesLocation, moduleName) => {
   const modulePath = path.resolve(pagesLocation, moduleName);
@@ -33,17 +31,17 @@ const initModuleAsync = async (nemo, { pagesLocation }) => {
   nemo.objects = {};
 
   return moduleNames.forEach((moduleName) => {
-    const { pageObjectName, pageModule} = getPageModule(pagesLocation, moduleName);
+    const { pageObjectName, pageModule } = getPageModule(pagesLocation, moduleName);
 
     if (!isFunction(pageModule)) {
       throw new Error('The page object module was expected to be a factory function');
     }
 
     const model = pageModule(page, nemo);
-    
+
     Object.keys(model).forEach((key) => {
       const method = model[key];
-  
+
       if (isFunction(method)) {
         model[key] = method.bind(model, model);
       }
@@ -58,10 +56,11 @@ const initModuleAsync = async (nemo, { pagesLocation }) => {
 const init = util.callbackify(initModuleAsync);
 
 /**
- * 
+ *
  * Easily implement and use the Page Object pattern in your nemo based tests, by using a simple api,
- * mostly inspired by the [ember-cli-page-object](https://github.com/san650/ember-cli-page-object) ember addon, widely used in the ember ecosystem for functional and integration testing.
- * 
+ * mostly inspired by the [ember-cli-page-object](https://github.com/san650/ember-cli-page-object) ember addon,
+ * widely used in the ember ecosystem for functional and integration testing.
+ *
  * In your nemo configuration, with an absolute path specify where your page objects are.
  * @example
  * {
@@ -80,7 +79,7 @@ const init = util.callbackify(initModuleAsync);
  * @param {Object} opts
  * @param {String} opts.pagesLocation Absolute path pointing to a valid directory
  * @param {Object} nemo
- * @param {Function} callback 
+ * @param {Function} callback
  */
 function createPageObject(opts, nemo, callback) {
   if (arguments.length === 2) {
@@ -90,7 +89,7 @@ function createPageObject(opts, nemo, callback) {
   }
 
   return init(nemo, opts, callback);
-};
+}
 
 module.exports = {
   setup: createPageObject,

@@ -1,0 +1,12 @@
+{
+  "extends": "eslint-config-airbnb-base",
+  "parserOptions": {
+    "sourceType": "script"
+  },
+  "rules": {
+    "import/no-dynamic-require": "off",
+    "global-require": "off",
+    "no-param-reassign": "off",
+    "max-len": ["error", 150]
+  }
+}

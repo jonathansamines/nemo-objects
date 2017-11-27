@@ -13,7 +13,7 @@ describe('At the landing page', () => {
     nemo = await nemoBuilder(__dirname);
     app = await server();
 
-    countryLanding = nemo.objects.countryLanding;
+    ({ countryLanding } = nemo.objects);
   });
 
   after(async () => {
@@ -70,7 +70,7 @@ describe('At the landing page', () => {
     expect(model).to.be.deep.equal({
       // text
       singleMessage: 'Hello to the single world 1',
-      multiple: [ 'Hello to the world 1', 'Hello to the world 2' ],
+      multiple: ['Hello to the world 1', 'Hello to the world 2'],
       scoped: 'Hello to the scoped world',
       resetMessage: 'Hello to the reset-scoped world',
       atPosition: 'Hello to the world 2',
@@ -96,21 +96,21 @@ describe('At the landing page', () => {
 
       // value
       singleValue: 'Hello single value 1',
-      multipleValues: [ 'Hello multiple value 1', 'Hello multiple value 2' ],
+      multipleValues: ['Hello multiple value 1', 'Hello multiple value 2'],
       scopedValue: 'Hello scoped value',
       resetScopedValue: 'Hello reset scoped value',
       valueAtPosition: 'Hello multiple value 2',
 
       // attribute
       singleMessageAttribute: 'hello single attribute 1',
-      multipleAttribute: [ 'hello attribute 1', 'hello attribute 2' ],
+      multipleAttribute: ['hello attribute 1', 'hello attribute 2'],
       scopedAttribute: 'hello scoped attribute',
       resetMessageAttribute: 'reset-scoped attribute',
       atPositionAttribute: 'hello attribute 2',
-      countries: [ { countryName: 'Guatemala', countryCode: 'GT' },
+      countries: [{ countryName: 'Guatemala', countryCode: 'GT' },
         { countryName: 'Guatemala', countryCode: 'GT' },
         { countryName: 'Guatemala', countryCode: 'GT' },
-        { countryName: 'Guatemala', countryCode: 'GT' } ]
+        { countryName: 'Guatemala', countryCode: 'GT' }],
     });
   });
 });

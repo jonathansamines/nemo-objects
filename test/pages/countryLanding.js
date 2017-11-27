@@ -15,7 +15,7 @@ module.exports = function countryLanding(pageObject, nemo) {
   return {
     scope: '.wrapper',
     visit: visitable(nemo.data.url),
-    
+
     // text
     message: text('.single'),
     messages: text('.multiple', { multiple: true }),
@@ -63,6 +63,6 @@ module.exports = function countryLanding(pageObject, nemo) {
         countryName: text('span'),
         countryCode: text('i'),
       },
-    })
+    }),
   };
 };

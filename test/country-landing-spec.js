@@ -1,6 +1,5 @@
 'use strict';
 
-const Promise = require('bluebird');
 const nemoBuilder = require('nemo');
 const { expect } = require('chai');
 const server = require('./fixtures/server');
@@ -25,48 +24,48 @@ describe('At the landing page', () => {
   it('returns the list of available countries', async () => {
     await countryLanding.visit();
 
-    const model = await Promise.props({
+    const model = {
       // text
-      singleMessage: countryLanding.message(),
-      multiple: countryLanding.messages(),
-      scoped: countryLanding.scopedMessage(),
-      resetMessage: countryLanding.resetMessage(),
-      atPosition: countryLanding.messageAtPosition(),
+      singleMessage: await countryLanding.message(),
+      multiple: await countryLanding.messages(),
+      scoped: await countryLanding.scopedMessage(),
+      resetMessage: await countryLanding.resetMessage(),
+      atPosition: await countryLanding.messageAtPosition(),
 
       // count
-      messagesCount: countryLanding.messagesCount(),
-      scopedMessagesCount: countryLanding.scopedMessagesCount(),
-      resetScopeMessagesCount: countryLanding.resetScopeMessagesCount(),
+      messagesCount: await countryLanding.messagesCount(),
+      scopedMessagesCount: await countryLanding.scopedMessagesCount(),
+      resetScopeMessagesCount: await countryLanding.resetScopeMessagesCount(),
 
       // attribute
-      singleMessageAttribute: countryLanding.messageAttribute(),
-      multipleAttribute: countryLanding.messagesAttribute(),
-      scopedAttribute: countryLanding.scopedMessageAttribute(),
-      resetMessageAttribute: countryLanding.resetMessageAttribute(),
-      atPositionAttribute: countryLanding.messageAtPositionAttribute(),
+      singleMessageAttribute: await countryLanding.messageAttribute(),
+      multipleAttribute: await countryLanding.messagesAttribute(),
+      scopedAttribute: await countryLanding.scopedMessageAttribute(),
+      resetMessageAttribute: await countryLanding.resetMessageAttribute(),
+      atPositionAttribute: await countryLanding.messageAtPositionAttribute(),
 
       // visible
-      isSingleMessageVisible: countryLanding.isSingleMessageVisible(),
-      areSingleMessagesVisible: countryLanding.areSingleMessagesVisible(),
-      isScopedMessageVisible: countryLanding.isScopedMessageVisible(),
-      isResetScopedMessageVisible: countryLanding.isResetScopedMessageVisible(),
-      isMessateAtPositionVisible: countryLanding.isMessateAtPositionVisible(),
+      isSingleMessageVisible: await countryLanding.isSingleMessageVisible(),
+      areSingleMessagesVisible: await countryLanding.areSingleMessagesVisible(),
+      isScopedMessageVisible: await countryLanding.isScopedMessageVisible(),
+      isResetScopedMessageVisible: await countryLanding.isResetScopedMessageVisible(),
+      isMessateAtPositionVisible: await countryLanding.isMessateAtPositionVisible(),
 
-      singleValue: countryLanding.singleValue(),
-      multipleValues: countryLanding.multipleValues(),
-      scopedValue: countryLanding.scopedValue(),
-      resetScopedValue: countryLanding.resetScopedValue(),
-      valueAtPosition: countryLanding.valueAtPosition(),
+      singleValue: await countryLanding.singleValue(),
+      multipleValues: await countryLanding.multipleValues(),
+      scopedValue: await countryLanding.scopedValue(),
+      resetScopedValue: await countryLanding.resetScopedValue(),
+      valueAtPosition: await countryLanding.valueAtPosition(),
 
       // hasClass
-      firstMessageIsSingle: countryLanding.firstMessageIsSingle(),
-      allMessagesAreSingle: countryLanding.allMessagesAreSingle(),
-      scopedMessageIsHello: countryLanding.scopedMessageIsHello(),
-      scopedResetMessageIsHello: countryLanding.scopedResetMessageIsHello(),
-      thirdElementIsMultiple: countryLanding.thirdElementIsMultiple(),
+      firstMessageIsSingle: await countryLanding.firstMessageIsSingle(),
+      allMessagesAreSingle: await countryLanding.allMessagesAreSingle(),
+      scopedMessageIsHello: await countryLanding.scopedMessageIsHello(),
+      scopedResetMessageIsHello: await countryLanding.scopedResetMessageIsHello(),
+      thirdElementIsMultiple: await countryLanding.thirdElementIsMultiple(),
 
-      countries: countryLanding.countries(),
-    });
+      countries: await countryLanding.countries(),
+    };
 
     expect(model).to.be.deep.equal({
       // text

@@ -1,7 +1,5 @@
 'use strict';
 
-const Promise = require('bluebird');
-
 module.exports = function countryLanding(pageObject, nemo) {
   const {
     visitable,

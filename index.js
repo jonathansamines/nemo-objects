@@ -3,12 +3,48 @@
 const path = require('path');
 const glob = require('glob');
 const assert = require('assert');
-const Promise = require('bluebird');
+const util = require('util');
 const isFunction = require('lodash/isFunction');
 const pageObject = require('./lib/page-object');
 
-const globAsync = Promise.promisify(glob, { multiArgs: true });
+const globAsync = util.promisify(glob);
 const PAGE_OBJECT_MODULES_GLOB = '**/*.js';
+
+const init = async (nemo, opts) => {
+  assert(typeof opts.pagesLocation === 'string', 'A pages absolute path is required');
+
+  const moduleNames = await globAsync(PAGE_OBJECT_MODULES_GLOB, {
+    cwd: opts.pagesLocation
+  });
+
+  const page = pageObject(nemo);
+
+  nemo.objects = {};
+
+  return moduleNames.forEach((moduleName) => {
+    const modulePath = path.resolve(opts.pagesLocation, moduleName);
+    const pageObjectName = path.basename(modulePath, path.extname(modulePath));
+    const pageModule = require(modulePath);
+
+    if (!isFunction(pageModule)) {
+      throw new Error('The page object module was expected to be a function');
+    }
+
+    const model = pageModule(page, nemo);
+    
+    Object.keys(model).forEach((key) => {
+      const method = model[key];
+  
+      if (isFunction(method)) {
+        model[key] = method.bind(model, model);
+      }
+    });
+
+    Object.assign(nemo.objects, {
+      [pageObjectName]: model,
+    });
+  });
+};
 
 /**
  * 
@@ -42,43 +78,9 @@ function createPageObject(opts, nemo, callback) {
     opts = {};
   }
 
-  return Promise.try(() => {
-    assert(typeof opts.pagesLocation === 'string', 'A pages absolute path is required');
+  const initWithCallback = util.callbackify(init);
 
-    return globAsync(PAGE_OBJECT_MODULES_GLOB, {
-      cwd: opts.pagesLocation
-    });
-  })
-  .then((moduleNames) => {
-    const page = pageObject(nemo);
-
-    nemo.objects = {};
-
-    return moduleNames.forEach((moduleName) => {
-      const modulePath = path.resolve(opts.pagesLocation, moduleName[0]);
-      const pageObjectName = path.basename(modulePath, path.extname(modulePath));
-      const pageModule = require(modulePath);
-
-      if (!isFunction(pageModule)) {
-        throw new Error('The page object module was expected to be a function');
-      }
-
-      const model = pageModule(page, nemo);
-      
-      Object.keys(model).forEach((key) => {
-        const method = model[key];
-    
-        if (isFunction(method)) {
-          model[key] = method.bind(model, model);
-        }
-      });
-
-      Object.assign(nemo.objects, {
-        [pageObjectName]: model,
-      });
-    });
-  })
-  .asCallback(callback);
+  return initWithCallback(nemo, opts, callback);
 };
 
 module.exports = {

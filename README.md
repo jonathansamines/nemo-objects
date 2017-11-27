@@ -15,18 +15,18 @@ Easily implement and use the Page Object pattern in your nemo based tests, by us
 In your nemo configuration, with an absolute path specify where your page objects are.
 
 ```json
-  {
-    "plugins": {
-      "nemo-objects": {
-        "module": "nemo-objects",
-        "arguments": [
-          {
-            "pagesLocation": "/path/to/page-objects"
-          }
-        ]
-      }
-    }   
+{
+  "plugins": {
+    "nemo-objects": {
+      "module": "nemo-objects",
+      "arguments": [
+        {
+          "pagesLocation": "/path/to/page-objects"
+        }
+      ]
+    }
   }
+}
 ```
 
 ### Creating a page object
@@ -36,40 +36,42 @@ At the specified location, for any given file found a page object will be create
 At the `countryCenter.js` file, a page-object can be declared as follows:
 
 ```js
-  'use strict';
+'use strict';
 
-  module.exports = function countryCenterPage(pageObject, nemo) {
-    const { visitable, collection, text } = pageObject;
+module.exports = function countryCenterPage(pageObject, nemo) {
+  const { visitable, collection, text } = pageObject;
 
-    return {
-      visit: visitable(`${nemo.data.url}/country-center`),
-      countries: collection({
-        scope: '.country-list',
-        itemScope: 'ul li',
-        item: {
-          countryName: text('span')
-        }
-      })
-    };
+  return {
+    visit: visitable(`${nemo.data.url}/country-center`),
+    countries: collection({
+      scope: '.country-list',
+      itemScope: 'ul li',
+      item: {
+        countryName: text('span')
+      }
+    })
   };
-``` 
+};
+```
 
 Which later can be used at your functional tests as:
 
 ```js
-  // all the setup code for your nemo environment
-  // The `nemo` variable is made available here
+'use strict';
 
-  describe('At the country center page', () => {
-    it('All user countries are shown', async () => {
-      const { countryCenter } = nemo.objects;
+// all the setup code for your nemo environment
+// The `nemo` variable is made available here
 
-      await countryCenter.visit();
-      const countries = await countryCenter.countries();
+describe('At the country center page', () => {
+  it('All user countries are shown', async () => {
+    const { countryCenter } = nemo.objects;
 
-      expect(countries.length).to.be.equal(4, 'the number of countries matches the user settings');
-    });
+    await countryCenter.visit();
+    const countries = await countryCenter.countries();
+
+    expect(countries.length).to.be.equal(4, 'the number of countries matches the user settings');
   });
+});
 ```
 
 

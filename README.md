@@ -74,7 +74,6 @@ describe('At the country center page', () => {
 });
 ```
 
-
 ## API
 
 ### Plugin configuration

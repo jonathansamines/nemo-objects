@@ -1,6 +1,6 @@
 {
   "name": "nemo-objects",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "Easily implement and use the Page Object pattern in your nemo based tests",
   "main": "index.js",
   "scripts": {

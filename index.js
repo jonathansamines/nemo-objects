@@ -8,26 +8,35 @@ const isFunction = require('lodash/isFunction');
 const pageObject = require('./lib/page-object');
 
 const globAsync = util.promisify(glob);
-const PAGE_OBJECT_MODULES_GLOB = '**/*.js';
 
-const init = async (nemo, opts) => {
-  assert(typeof opts.pagesLocation === 'string', 'A pages absolute path is required');
+const getPageModuleNames = async (cwd) => {
+  return await globAsync('**/*.js', { cwd });
+};
 
-  const moduleNames = await globAsync(PAGE_OBJECT_MODULES_GLOB, {
-    cwd: opts.pagesLocation
-  });
+const getPageModule = (pagesLocation, moduleName) => {
+  const modulePath = path.resolve(pagesLocation, moduleName);
+  const pageObjectName = path.basename(modulePath, path.extname(modulePath));
+  const pageModule = require(modulePath);
+
+  return {
+    pageObjectName,
+    pageModule,
+  };
+};
+
+const initModuleAsync = async (nemo, { pagesLocation }) => {
+  assert(typeof pagesLocation === 'string', 'A pages absolute path is required');
 
   const page = pageObject(nemo);
+  const moduleNames = await getPageModuleNames(pagesLocation);
 
   nemo.objects = {};
 
   return moduleNames.forEach((moduleName) => {
-    const modulePath = path.resolve(opts.pagesLocation, moduleName);
-    const pageObjectName = path.basename(modulePath, path.extname(modulePath));
-    const pageModule = require(modulePath);
+    const { pageObjectName, pageModule} = getPageModule(pagesLocation, moduleName);
 
     if (!isFunction(pageModule)) {
-      throw new Error('The page object module was expected to be a function');
+      throw new Error('The page object module was expected to be a factory function');
     }
 
     const model = pageModule(page, nemo);
@@ -45,6 +54,8 @@ const init = async (nemo, opts) => {
     });
   });
 };
+
+const init = util.callbackify(initModuleAsync);
 
 /**
  * 
@@ -78,9 +89,7 @@ function createPageObject(opts, nemo, callback) {
     opts = {};
   }
 
-  const initWithCallback = util.callbackify(init);
-
-  return initWithCallback(nemo, opts, callback);
+  return init(nemo, opts, callback);
 };
 
 module.exports = {
